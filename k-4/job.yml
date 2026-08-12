@@ -1,0 +1,17 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+ name: nginx-job
+ namespace: nginx
+spec:
+ template:
+  metadata:
+   labels:
+    app: nginx
+  spec:
+   containers:
+   - name: nginx
+     image: nginx:latest
+     command: ["echo", "hello from job"]
+   restartPolicy: Never
+ backoffLimit: 4

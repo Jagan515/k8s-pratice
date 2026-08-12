@@ -16,3 +16,4 @@ nodes:
       - containerPort: 443
         hostPort: 443
         protocol: TCP
+# step 1: kind create cluster --name tws-cluster --config k-1/config.yml

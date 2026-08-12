@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1
+metadata:
+ name: nginx-pod
+ namespace: nginx
+spec:
+ containers:
+ - name: nginx
+   image: nginx:latest
+   ports:
+   - containerPort: 80
+  
+
+
+  #step 3: kubectl create -f k-2/pod.yml

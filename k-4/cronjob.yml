@@ -1,0 +1,19 @@
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+ name: nginx-cronjob
+ namespace: nginx
+spec:
+ schedule: "*/5 * * * *"
+ jobTemplate:
+  spec:
+   template:
+    metadata:
+     labels:
+      app: nginx
+    spec:
+     containers:
+     - name: nginx
+       image: nginx:latest
+       command: ["echo", "hello from cronjob"]
+     restartPolicy: Never

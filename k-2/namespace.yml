@@ -1,0 +1,8 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: nginx
+  
+
+
+  #ste p 2: kubectl create -f k-2/namespace.yml
