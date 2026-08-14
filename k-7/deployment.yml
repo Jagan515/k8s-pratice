@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+ name: notes-deployment
+ namespace: notes-app
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: notes-app
+ template:
+  metadata:
+   labels:
+    app: notes-app
+  spec:
+   containers:
+   - name: notes-container
+     image: jagan515/notes-app-k8s:latest
+     ports:
+     - containerPort: 8000

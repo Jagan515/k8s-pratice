@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: notes-service
+  namespace: nginx    
+spec:
+  type: ClusterIP
+  selector:
+    app: notes-app
+  ports:
+    - port: 8000
+      targetPort: 8000
+
+
+
+# kubectl port-forward service/notes-service -n notes-app 8000:8000
+
+#   http://localhost:8000
+

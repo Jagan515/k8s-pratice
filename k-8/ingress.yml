@@ -1,0 +1,33 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: notes-ingress
+  namespace: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: notes-service
+                port:
+                  number: 8000
+          - path: /nginx
+            pathType: Prefix
+            backend:
+              service:
+                # ExternalName Service (see service.yml) proxying to the
+                # real ingress-nginx-controller Service in the
+                # ingress-nginx namespace, since Ingress can only
+                # reference Services in its own namespace.
+                name: nginx-service
+                port:
+                  number: 80
+
+
+#kubectl port-forward service/ingress-nginx-controller -n  ingress-nginx 8080:80
