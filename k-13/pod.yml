@@ -1,0 +1,17 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: toleration-demo-pod
+  labels:
+    app: toleration-demo
+spec:
+  containers:
+    - name: toleration-demo
+      image: nginx
+      ports:
+        - containerPort: 80
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: special
+      effect: NoSchedule

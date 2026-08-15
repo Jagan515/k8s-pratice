@@ -1,0 +1,43 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: secret-demo
+spec:
+  serviceName: secret-demo
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secret-demo
+  template:
+    metadata:
+      labels:
+        app: secret-demo
+    spec:
+      containers:
+        - name: secret-demo
+          image: nginx
+          # consume the secret as env vars
+          env:
+            - name: SECRET_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: username
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: password
+          # consume the secret as mounted files too
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /etc/app-secret
+              readOnly: true
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: app-secret
+
+# kubectl exec -it secret-demo-0 -- env | grep SECRET_
+# kubectl exec -it secret-demo-0 -- cat /etc/app-secret/username
+# kubectl exec -it secret-demo-0 -- cat /etc/app-secret/password

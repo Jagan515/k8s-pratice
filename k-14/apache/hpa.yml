@@ -1,0 +1,29 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: apache-hpa
+  namespace: apache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: apache-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 5
+
+
+        # kubectl port-forward svc/apache-service -n apache 8080:80  
+
+        # kubectl run load-generator -n apache --image=busybox --restart=Never -- /bin/sh -c 'while true; do wget -q -O- http://apache-service >/dev/null; done'
+
+
+        # kubectl top pods -n apache
+
+        # kubectl delete pod load-generator -n apache
